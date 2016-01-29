@@ -1,4 +1,4 @@
-# ESP8266-ArduinoIDE
+# ESP8266-Arduino IDE
 
 Example projects for Arduino IDE to be used with the ESP8266 System On a Chip 
 
