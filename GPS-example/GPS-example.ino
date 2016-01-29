@@ -23,8 +23,8 @@
 const int led = 2;
 
 // Update these with your network settings
-const char* ssid = "PPAD5";
-const char* password = "48takasje";
+const char* ssid = "change-me";
+const char* password = "change-me";
 
 // Set this value equal to the baud rate of your GPS
 #define GPSBAUD  9600
