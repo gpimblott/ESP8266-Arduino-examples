@@ -17,6 +17,7 @@ All are compiled using Arduino IDE 1.6.7 with the custom ESP8266 board installed
 * BMP085-example-webserver
   *  Connects to WLAN and starts a webserver on port 80.  
   *  Calls to root URL responds with values from connected BMP085 sensor.
+
 **GPS Example**
 * GPS-example
   *  Connects to WLAN and start a webserver on port 80
