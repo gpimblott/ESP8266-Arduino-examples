@@ -25,4 +25,11 @@ All are compiled using Arduino IDE 1.6.7 with the custom ESP8266 board installed
   *  Outputs GPS position to serial console and webserver
   *  Calls to root URL reposond with current position etc
 
+**Real Time Closk Example**
+* RTC-example
+  * Connects to WLAN and start a webserver on port 80
+  * Connects to RTC using I2C
+  * Respond to queries on the root path with the current time
+  * Set the time using URL parameters to /set?hour=00&minute=00&second=00&dayofweek=xxxx&monthofyear=xxx&year=16
+  * Example : http://adress/set?hour=21&minute=21&monthofyear=jan&dayofweek=saturday&dayofmonth=30&year=16
   
