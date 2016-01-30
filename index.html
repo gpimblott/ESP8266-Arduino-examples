@@ -29,7 +29,7 @@
       <div class="inner clearfix">
         <section id="main-content">
           <h1>
-<a id="esp8266-example-projects" class="anchor" href="#esp8266-example-projects" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>ESP8266 Example Projects</h1>
+<a id="esp8266-arduino-ide" class="anchor" href="#esp8266-arduino-ide" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>ESP8266-Arduino IDE</h1>
 
 <p>Example projects for Arduino IDE to be used with the ESP8266 System On a Chip </p>
 
@@ -67,6 +67,21 @@
 <li> Connects to GPS using a SoftwareSerial port</li>
 <li> Outputs GPS position to serial console and webserver</li>
 <li> Calls to root URL reposond with current position etc</li>
+</ul>
+</li>
+</ul>
+
+<p><strong>Real Time Clock Example</strong></p>
+
+<ul>
+<li>RTC-example
+
+<ul>
+<li>Connects to WLAN and start a webserver on port 80</li>
+<li>Connects to RTC using I2C</li>
+<li>Respond to queries on the root path with the current time</li>
+<li>Set the time using URL parameters to /set?hour=00&amp;minute=00&amp;second=00&amp;dayofweek=xxxx&amp;monthofyear=xxx&amp;year=16</li>
+<li>Example : http://address/set?hour=21&amp;minute=21&amp;monthofyear=jan&amp;dayofweek=saturday&amp;dayofmonth=30&amp;year=16</li>
 </ul>
 </li>
 </ul>
