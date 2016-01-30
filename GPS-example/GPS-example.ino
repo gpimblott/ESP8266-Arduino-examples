@@ -23,11 +23,13 @@
 const int led = 2;
 
 // Update these with your network settings
-const char* ssid = "change-me";
-const char* password = "change-me";
+#include "passwords.h"
 
 // Set this value equal to the baud rate of your GPS
 #define GPSBAUD  9600
+
+// Console output rate
+#define SERIALBAUD  9600
 
 // Create the webserver
 ESP8266WebServer server(80);
@@ -42,7 +44,7 @@ TinyGPSPlus gps;
 SimpleTimer timer;
 
 boolean gpsValid = false;
-char data[80];
+char data[80] = "Unknown";
 
 // Local functions
 void outputData();
@@ -88,7 +90,7 @@ void initWebServer( const char* ssid, const char * password)
 //
 void setup()
 {
-  Serial.begin(9600);
+  Serial.begin(SERIALBAUD);
 
   Serial.println("");
   Serial.println("Starting...");
@@ -99,9 +101,7 @@ void setup()
   
   // Initialise the web server
   initWebServer(ssid , password);
-
-  // server.on("/", handleTemp);
-  // server.onNotFound(handleNotFound);
+  
   server.on("/", handleRoot);
   server.begin();
 
@@ -123,6 +123,7 @@ void loop()
 {
   // Check for GPS data
   while (uart_gps.available() > 0) {
+    //Serial.print( uart_gps.read() );
     gps.encode(uart_gps.read());
   }
 
@@ -142,6 +143,8 @@ void outputData(){
   // GPS LED lit
   if( !gps.location.isValid() ) {
     digitalWrite( led , HIGH );
+    Serial.print("No GPS lock : ");
+    Serial.println( gps.satellites.value() );
     return;
   } 
   
