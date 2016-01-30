@@ -43,7 +43,7 @@ void displayTime()
   message += rtcClock.getTime();
   server.send(200, "text/plain", message);
 
-  rtcClock.displayTime();
+  Serial.println( message );
 }
 
 // Set the time and Date
@@ -108,7 +108,7 @@ void setTime()
 
   server.send(200, "text/plain", message);
 
-  rtcClock.displayTime();
+  Serial.println( rtcClock.getTime());
 }
 
 // Page not found message
