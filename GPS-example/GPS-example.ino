@@ -6,9 +6,9 @@
 #include <WiFiClient.h>
 #include <ESP8266WebServer.h>
 #include <ESP8266mDNS.h>
+#include <Ticker.h>
 
 #include "TinyGPS++.h"
-#include "SimpleTimer.h"
 
 //
 //    Example Code for ESP8266 and Bloc GPS6MV2 GPS board and the Arduino IDE
@@ -29,7 +29,7 @@ const int led = 2;
 #define GPSBAUD  9600
 
 // Console output rate
-#define SERIALBAUD  9600
+#define SERIALBAUD  115200
 
 // Create the webserver
 ESP8266WebServer server(80);
@@ -41,7 +41,7 @@ SoftwareSerial uart_gps(13, 15);
 TinyGPSPlus gps;
 
 // the timer object
-SimpleTimer timer;
+Ticker outputTicker;
 
 boolean gpsValid = false;
 char data[80] = "Unknown";
@@ -92,6 +92,8 @@ void setup()
 {
   Serial.begin(SERIALBAUD);
 
+  Serial.println();
+  Serial.println(ESP.getResetInfo());
   Serial.println("");
   Serial.println("Starting...");
 
@@ -105,6 +107,7 @@ void setup()
   server.on("/", handleRoot);
   server.begin();
 
+  //ESP.wdtDisable();
   
   Serial.println("HTTP server started");
 
@@ -112,23 +115,24 @@ void setup()
   Serial.println("Initialising GPS port");
   uart_gps.begin(GPSBAUD);
 
-  // Setup the timer to gather stats and write to the serial port
-  // It doesn't have to be accurate so simpleTimer is fine
-  timer.setInterval(5000, outputData);
+  // Set the tocker to output data every 2 second
+  outputTicker.attach( 3.0 , outputData);
 }
 
 
-// Keep looping handling new HTTP connections
+// Main loop
+// 1) Read GPS data and process
+// 2) Service HTTP requests
 void loop()
 {
   // Check for GPS data
+  // A yield is included to allow background tasks to continue
   while (uart_gps.available() > 0) {
     //Serial.print( uart_gps.read() );
     gps.encode(uart_gps.read());
+    ESP.wdtFeed();
+    yield();
   }
-
-  // Keep the sample timer running
-  timer.run();
   
   // service HTTP requests
   server.handleClient();
